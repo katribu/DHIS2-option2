@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react"
 import { getMainDashboardNames, getDashboardDetailsById } from "../utils/fetch"
-import { FaStar, FaSortDown } from "react-icons/fa";
+import { FaStar, FaSortDown, FaGlobe, FaListAlt, FaChartBar } from "react-icons/fa";
 
 export default function DashboardItem({filter}){
 
@@ -65,15 +65,15 @@ const renderDashboardDetails = dashboardsDetails?.map(category => {
 
             if(item.type === "VISUALIZATION"){
              return (
-                 <p key={i}>{item.visualization.name.split(": ")[1]}</p>
+                 <p key={i}><FaChartBar/> {item.visualization.name.split(": ")[1]}</p>
              )
             }else if(item.type === "TEXT"){
              return (
-                 <p key={i}>{item.text}</p>
+                 <p key={i}><FaListAlt/> {item.text}</p>
              )
             }else if(item.type === "MAP"){
              return (
-                 <p key={i}>{item.map.name.split(": ")[1]}</p>
+                 <p key={i}><FaGlobe/> {item.map.name.split(": ")[1]}</p>
              )
             }
         }

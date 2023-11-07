@@ -3,13 +3,14 @@ export default function Header({onFilter}){
     function handleFilter(e){
         onFilter(e.target.value)
     }
+    
     return (
         <header>
             <h1> DHSI2 Dashboard</h1>
             <div>
             <p> Choose Type: </p>
                 <select
-                onChange={handleFilter} // ... and update the state variable on any change!
+                onChange={handleFilter}
                 placeholder="Choose Type">
                 <option value="">All</option>
                 <option value="visualization">Visualization</option>
