@@ -9,27 +9,44 @@ export default function DashboardItem({filter}){
     const [dashboardsDetails, setDashboardsDetails] = useState([])
     const [favoriteCategories, setFavoriteCategories] = useState([]);
     const [expandedCategory, setExpandedCategory] = useState(null);
-  
-
-    async function mainDashboard(){
-        const dashboardObject = await getMainDashboardNames()
-        const mainDashboardArray = await dashboardObject.dashboards
-        setMainDashboardInfo(mainDashboardArray)
-    }
-
-    async function dashboardDetails(){
-        const dashboardIds = mainDashboardInfo?.map(item => item.id)
-        const detailsArray = []
-        for(let i=0; i<dashboardIds.length;i++){
-            const details = await getDashboardDetailsById(dashboardIds[i])
-            detailsArray.push({
-                displayName: details.displayName,
-                id: details.id,
-                dashboardItems: details.dashboardItems
-            })
+    
+    useEffect(() => {
+        async function fetchData() {
+            const dashboardObject = await getMainDashboardNames();
+          const mainDashboardArray = dashboardObject.dashboards || [];
+          setMainDashboardInfo(mainDashboardArray);
+    
+          // Retrieve favoriteCategories from local storage
+        //   const retrievedFavorites = JSON.parse(localStorage.getItem('favoriteCategories')) || [];
+        //   setFavoriteCategories(retrievedFavorites);
         }
-        setDashboardsDetails(detailsArray)
-    }
+        
+        fetchData();
+    }, []);
+    
+    // Fetch dashboard details when mainDashboardInfo updates
+    useEffect(() => {
+        async function dashboardDetails() {
+          const dashboardIds = mainDashboardInfo?.map((item) => item.id);
+          const detailsArray = [];
+          
+          for (let i = 0; i < dashboardIds.length; i++) {
+              const details = await getDashboardDetailsById(dashboardIds[i]);
+              detailsArray.push({
+                  displayName: details.displayName,
+                  id: details.id,
+                  dashboardItems: details.dashboardItems,
+            });
+          }
+    
+          setDashboardsDetails(detailsArray);
+        }
+        
+        // Call dashboardDetails() when mainDashboardInfo is available
+        if (mainDashboardInfo.length > 0) {
+            dashboardDetails();
+        }
+    }, [mainDashboardInfo]);
 
     const handleClick = (categoryId) => {
         if(expandedCategory === categoryId){
@@ -37,29 +54,37 @@ export default function DashboardItem({filter}){
         }else {
             setExpandedCategory(categoryId)
         }
-  
+        
     }
 
-
-  const handleFavoriteCategory = (categoryId) => {
-    if (favoriteCategories.includes(categoryId)) {
-      // If the category is already a favorite, remove it
-      setFavoriteCategories(favoriteCategories.filter((id) => id !== categoryId));
-    } else {
-      // Add the category to the favorites
-      setFavoriteCategories([...favoriteCategories, categoryId]);
-    }
-
-  };
-
-
-    useEffect(() => {
-        mainDashboard()
-        dashboardDetails()
-    })
     
-
-const renderDashboardDetails = dashboardsDetails?.map(category => {
+    const handleFavoriteCategory = (categoryId) => {
+      if (favoriteCategories.includes(categoryId)) {
+          // If the category is already a favorite, remove it
+          setFavoriteCategories(favoriteCategories.filter((id) => id !== categoryId));
+        } else {
+            // Add the category to the favorites
+            setFavoriteCategories([...favoriteCategories, categoryId]);
+        }
+        
+        // localStorage.setItem('favoriteCategories', JSON.stringify(favoriteCategories));
+    };
+    
+        
+    useEffect(() => {
+        let retrievedFavorites = JSON.parse(localStorage.getItem('favoriteCategories'))
+        if (Array.isArray(retrievedFavorites)) {
+            setFavoriteCategories(retrievedFavorites);
+        }
+    },[])
+                
+                
+    useEffect(()=>{
+        let savedFavorites = JSON.stringify(favoriteCategories)
+        localStorage.setItem('favoriteCategories', savedFavorites);
+    },[favoriteCategories])
+                
+    const renderDashboardDetails = dashboardsDetails?.map(category => {
     const items = category.dashboardItems?.map((item,i) => {
         if (!filter || item.type.toLowerCase().includes(filter.toLowerCase())){
 
