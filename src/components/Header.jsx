@@ -7,11 +7,15 @@ export default function Header({onFilter}){
         <header>
             <h1> DHSI2 Dashboard</h1>
             <div>
-                <input 
-                    type="text"
-                    placeholder="Filter Items"
-                    onInput={handleFilter}
-                />
+            <p> Choose Type: </p>
+                <select
+                onChange={handleFilter} // ... and update the state variable on any change!
+                placeholder="Choose Type">
+                <option value="">All</option>
+                <option value="visualization">Visualization</option>
+                <option value="text">Text</option>
+                <option value="map">Map</option>
+                </select>
             </div>
         </header>
 
