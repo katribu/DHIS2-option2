@@ -2,7 +2,8 @@ import { useState,useEffect } from "react"
 import { getMainDashboardNames, getDashboardDetailsById } from "../utils/fetch"
 import { FaStar, FaSortDown } from "react-icons/fa";
 
-export default function DashboardItem(){
+export default function DashboardItem({filter}){
+
 
     const [mainDashboardInfo, setMainDashboardInfo] = useState([])
     const [dashboardsDetails, setDashboardsDetails] = useState([])
@@ -39,7 +40,6 @@ export default function DashboardItem(){
   
     }
 
-    
 
   const handleFavoriteCategory = (categoryId) => {
     if (favoriteCategories.includes(categoryId)) {
@@ -49,32 +49,34 @@ export default function DashboardItem(){
       // Add the category to the favorites
       setFavoriteCategories([...favoriteCategories, categoryId]);
     }
+
   };
-
-
-    // to persist the favoriting of a category over page reload, use local storage. 
 
 
     useEffect(() => {
         mainDashboard()
         dashboardDetails()
     })
+    
 
 const renderDashboardDetails = dashboardsDetails?.map(category => {
     const items = category.dashboardItems?.map((item,i) => {
-       if(item.type === "VISUALIZATION"){
-        return (
-            <p key={i}>{item.visualization.name.split(": ")[1]}</p>
-        )
-       }else if(item.type === "TEXT"){
-        return (
-            <p key={i}>{item.text}</p>
-        )
-       }else if(item.type === "MAP"){
-        return (
-            <p key={i}>{item.map.name.split(": ")[1]}</p>
-        )
-       }
+        if (!filter || item.type.toLowerCase().includes(filter.toLowerCase())){
+
+            if(item.type === "VISUALIZATION"){
+             return (
+                 <p key={i}>{item.visualization.name.split(": ")[1]}</p>
+             )
+            }else if(item.type === "TEXT"){
+             return (
+                 <p key={i}>{item.text}</p>
+             )
+            }else if(item.type === "MAP"){
+             return (
+                 <p key={i}>{item.map.name.split(": ")[1]}</p>
+             )
+            }
+        }
     })
 
    
