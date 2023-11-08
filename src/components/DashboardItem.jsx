@@ -12,9 +12,9 @@ export default function DashboardItem({filter}){
     
     useEffect(() => {
         async function fetchData() {
-            const dashboardObject = await getMainDashboardNames();
-          const mainDashboardArray = dashboardObject.dashboards || [];
-          setMainDashboardInfo(mainDashboardArray);
+        const dashboardObject = await getMainDashboardNames();
+        const mainDashboardArray = dashboardObject.dashboards || [];
+        setMainDashboardInfo(mainDashboardArray);
     
           // Retrieve favoriteCategories from local storage
         //   const retrievedFavorites = JSON.parse(localStorage.getItem('favoriteCategories')) || [];
