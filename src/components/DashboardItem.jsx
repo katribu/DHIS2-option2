@@ -126,7 +126,7 @@ export default function DashboardItem({filter}){
 
 // ************* FINAL RETURN ******************** //
     return (
-        <div className="lg:w-3/5 m-auto my-10 p-2 bg-zinc-950 h-screen">
+        <div className="lg:w-3/5 m-auto my-10 p-2 bg-zinc-800">
          {renderDashboardDetails}
         </div>
     )

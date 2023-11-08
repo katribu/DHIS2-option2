@@ -7,7 +7,7 @@ function App() {
   const [filter, setFilter] = useState("")
 
   return (
-    <div className="bg-zinc-950 text-slate-50 font-sans">
+    <div className="bg-zinc-700 text-slate-50 font-sans min-h-screen p-1">
      <Header onFilter={setFilter}/>
      <DashboardItem filter={filter} />
     </div>
