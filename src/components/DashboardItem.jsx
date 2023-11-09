@@ -90,15 +90,15 @@ export default function DashboardItem({filter}){
 
             if(item.type === "VISUALIZATION"){
              return (
-                 <p key={i} className="flex items-center m-2"><FaChartBar className="mr-4"/> {item.visualization.name.split(": ")[1]}</p>
+                 <p key={i} className="flex items-center m-5"><FaChartBar className="mr-4"/> {item.visualization.name.split(": ")[1]}</p>
              )
             }else if(item.type === "TEXT"){
              return (
-                 <p key={i} className="ml-2"><FaListAlt className="mr-6"/>{item.text}</p>
+                 <p key={i} className="ml-5"><FaListAlt className="mr-6"/>{item.text}</p>
              )
             }else if(item.type === "MAP"){
              return (
-                 <p key={i} className="flex items-center m-2"><FaGlobe className="mr-4"/> {item.map.name.split(": ")[1]}</p>
+                 <p key={i} className="flex items-center m-5"><FaGlobe className="mr-4"/> {item.map.name.split(": ")[1]}</p>
              )
             }
         }
@@ -106,8 +106,8 @@ export default function DashboardItem({filter}){
 
    
     return (
-        <div key={category.id} >
-            <div className="flex items-center my-5">
+        <div key={category.id}>
+            <div className="flex items-center m-5 bg-zinc-600 p-4">
                 <h3 className="text-xl grow font-semibold">{category.displayName}</h3>  
                 <div onClick={() => handleFavoriteCategory(category.id)} className="grow-0 px-5 hover:cursor-pointer">
                     <FaStar style={{color: favoriteCategories.includes(category.id)? "yellow" : ""}} /> 
