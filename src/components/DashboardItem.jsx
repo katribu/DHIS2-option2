@@ -16,9 +16,9 @@ export default function DashboardItem({filter}){
         const mainDashboardArray = dashboardObject.dashboards || [];
         setMainDashboardInfo(mainDashboardArray);
     
-          // Retrieve favoriteCategories from local storage
-        //   const retrievedFavorites = JSON.parse(localStorage.getItem('favoriteCategories')) || [];
-        //   setFavoriteCategories(retrievedFavorites);
+        //Retrieve favoriteCategories from local storage
+          const retrievedFavorites = JSON.parse(localStorage.getItem('favoriteCategories')) || [];
+          setFavoriteCategories(retrievedFavorites);
         }
         
         fetchData();
