@@ -7,7 +7,7 @@ export default function Header({onFilter}){
     return (
         <header className="flex justify-around p-3 border-b-white border-b-solid border-b-2 w-4/5 content-center text-center m-auto">
             <div>
-                <h1 className="text-5xl font-extrabold"> DHSI2 Dashboard</h1>
+                <h1 className="text-5xl font-extrabold"> DHIS2 Dashboard</h1>
             </div>
 
             <div>
